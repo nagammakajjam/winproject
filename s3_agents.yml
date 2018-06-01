@@ -23,8 +23,8 @@
         overwrite: different
       delegate_to: localhost
 
-   - name: Copy a single file
-     win_copy:
+    - name: Copy a single file
+      win_copy:
        src: /home/ec2-user/apache-tomcat-8.5.31-windows-x64.zip
        dest: C:\apache-tomcat-8.5.31-windows-x64.zip
 
