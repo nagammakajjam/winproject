@@ -11,11 +11,10 @@
       ec2_instance_facts:
         aws_access_key: "{{ aws_access_key_id }}"
         aws_secret_key: "{{ aws_secret_access_key }}"
-
         region: "{{ aws_region}}"
         filters:
           "tag:Name": 'Dev-Winserver'
-       register: ec2facts
+      register: ec2facts
 
 
      - name: debug
