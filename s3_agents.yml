@@ -1,0 +1,30 @@
+---
+ - hosts: windows
+   vars:
+  
+      aws_access_key_id: "AKIAJEAMSKU33WL3H67A"
+      aws_secret_access_key: "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"
+      aws_region: "us-west-2"
+
+
+   tasks:
+    - name: Copy a single file
+      win_copy:
+        src: foo.conf
+        dest: C:\foo.conf
+    - name: Simple GET operation
+      aws_s3:
+        aws_access_key: "{{ aws_access_key_id }}"
+        aws_secret_key: "{{ aws_secret_access_key }}"
+        bucket: sandhyabucket
+        object: apache-tomcat-8.5.31-windows-x64.zip
+        dest: /home/ec2-user/apache-tomcat-8.5.31-windows-x64.zip
+        mode: get
+        overwrite: different
+      delegate_to: localhost
+
+   - name: Copy a single file
+     win_copy:
+       src: /home/ec2-user/apache-tomcat-8.5.31-windows-x64.zip
+       dest: C:\apache-tomcat-8.5.31-windows-x64.zip
+

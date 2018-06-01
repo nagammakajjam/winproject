@@ -1,0 +1,3 @@
+- include: provision.yml
+- include: s3_agents.yml
+- include: ami_s3.yml

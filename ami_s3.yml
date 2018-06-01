@@ -1,0 +1,46 @@
+---
+ - hosts: localhost
+   connection: local
+   vars:
+    aws_access_key_id: "AKIAJEAMSKU33WL3H67A"
+    aws_secret_access_key: "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"
+    aws_region: "us-west-2"
+
+   tasks:
+    - name: gather facts for win server
+      ec2_instance_facts:
+        aws_access_key: "{{ aws_access_key_id }}"
+        aws_secret_key: "{{ aws_secret_access_key }}"
+
+        region: "{{ aws_region}}"
+        filters:
+          "tag:Name": 'Dev-Winserver'
+       register: ec2facts
+
+
+     - name: debug
+       debug:
+         var: ec2facts.instances[0].instance_id
+
+     - set_fact:
+       win_ser: "{{ ec2facts.instances[0].instance_id }}"
+
+     - name: stopped the win serer
+       ec2:
+        aws_access_key: "{{ aws_access_key_id }}"
+        aws_secret_key: "{{ aws_secret_access_key }}"
+
+        state: "stopped"
+        region: "{{ aws_region }}"
+        instance_ids: "{{ win_ser }}"
+
+     - name: create an ami
+       ec2_ami:
+         instance_id: "{{ win_ser }}"
+         wait: yes
+         name: WinAMI
+         tags:
+          Name: newtest
+          Service: DevService
+       register: ami
+
