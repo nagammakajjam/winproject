@@ -2,8 +2,7 @@
  - hosts: windows
    vars:
   
-      aws_access_key_id: "AKIAJEAMSKU33WL3H67A"
-      aws_secret_access_key: "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"
+     
       aws_region: "us-west-2"
 
 
